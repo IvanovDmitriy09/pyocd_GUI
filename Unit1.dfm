@@ -1,9 +1,11 @@
 object Form1: TForm1
   Left = 313
   Top = 165
-  Width = 976
-  Height = 515
-  Caption = 'Form1'
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'pyocd GUI'
+  ClientHeight = 593
+  ClientWidth = 448
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,14 +13,16 @@ object Form1: TForm1
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
     Left = 344
     Top = 115
-    Width = 41
+    Width = 97
     Height = 13
+    AutoSize = False
   end
   object Label2: TLabel
     Left = 128
@@ -63,17 +67,16 @@ object Form1: TForm1
   end
   object Memo1: TMemo
     Left = 16
-    Top = 176
-    Width = 505
-    Height = 289
-    Lines.Strings = (
-      'Memo1')
+    Top = 488
+    Width = 417
+    Height = 97
+    ReadOnly = True
     ScrollBars = ssVertical
     TabOrder = 2
   end
   object StringGrid1: TStringGrid
-    Left = 528
-    Top = 176
+    Left = 16
+    Top = 184
     Width = 417
     Height = 289
     ColCount = 17
@@ -101,7 +104,7 @@ object Form1: TForm1
     Height = 21
     MaxLength = 7
     TabOrder = 5
-    Text = '64'
+    Text = '1024'
     OnKeyPress = Edit2KeyPress
   end
   object Edit3: TEdit
@@ -139,7 +142,6 @@ object Form1: TForm1
     Style = csDropDownList
     ItemHeight = 13
     TabOrder = 9
-    OnChange = ComboBox1Change
   end
   object Button5: TButton
     Left = 248
@@ -162,15 +164,15 @@ object Form1: TForm1
     OnKeyPress = Edit4KeyPress
   end
   object OpenDialog1: TOpenDialog
-    Left = 912
-    Top = 40
+    Left = 368
+    Top = 152
   end
   object SaveDialog1: TSaveDialog
-    Left = 944
-    Top = 40
+    Left = 400
+    Top = 152
   end
   object XPManifest1: TXPManifest
-    Left = 880
-    Top = 40
+    Left = 336
+    Top = 152
   end
 end

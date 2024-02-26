@@ -35,7 +35,6 @@ type
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
-    procedure ComboBox1Change(Sender: TObject);
     procedure Edit4KeyPress(Sender: TObject; var Key: Char);
   private
     { Private declarations }
@@ -151,8 +150,6 @@ if (edit1.Text <> '') and (edit2.Text <> '') and (edit3.Text <> '') then
 begin
 s:=GetDosOutput('cmd /c pyocd cmd -u '+ copy(combobox1.Items.Text, 25, 6) +' -t '+ edit3.Text +' -c "read8 0x'+edit1.text+' '+edit2.text+'"', 'c:\', Rc);
 memo1.Text:=s;
-end else
-messagedlg('Не все поля заполнены!', mtWarning, [mbOK], 0);
 
 stringgrid1.RowCount:=ceil(strtoint(edit2.Text)/16)+1;
 
@@ -185,8 +182,8 @@ delete(s, 1, p+1);
 end;
 messagedlg('Flash прочитана!', mtInformation, [mbOK], 0);
 
-
-
+end else
+messagedlg('Не все поля заполнены!', mtWarning, [mbOK], 0);
 
 end;
 
@@ -225,14 +222,16 @@ begin
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
-
+begin
+if edit3.Text <> '' then
 begin
 if messagedlg('Вы точно хотите очистить Flash?', mtConfirmation, [mbYes, mbNo], 0)= mryes then
 begin
 memo1.text:=GetDosOutput('cmd /c pyocd cmd -u '+ copy(combobox1.Items.Text, 25, 6) +' -t '+ edit3.Text +' -c "erase"', 'c:\', Rc);
 messagedlg('Flash очищена!', mtInformation, [mbOK], 0);
 end else
-
+end else
+messagedlg('Не все поля заполнены!', mtWarning, [mbOK], 0);
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
@@ -252,45 +251,48 @@ p:=pos(#13, s);
 delete(s, 1, p+1);
 p:=pos(#13, s);
 delete(s, 1, p+1);
-memo1.Lines.add(s);
+memo1.Text:=s;
 combobox1.Items.Add(s);
 end;
 combobox1.Items.Delete(combobox1.Items.Count-1);
 
 combobox1.ItemIndex:=0;
+
+if combobox1.Text='' then
+begin
+button1.Enabled:=false;
+button2.Enabled:=false;
+button5.Enabled:=false;
+edit3.Enabled:=false;
+end else
+begin
+button1.Enabled:=true;
+button2.Enabled:=true;
+button5.Enabled:=true;
+edit3.Enabled:=true;
+end;
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
 begin
-if messagedlg('Вы точно хотите очистить Flash?', mtConfirmation, [mbYes, mbNo], 0)= mryes then
+if (edit3.Text <> '') and (edit4.Text <> '') then
+begin
+if messagedlg('Вы точно хотите записать файл '+ label1.Caption +' на Flash?', mtConfirmation, [mbYes, mbNo], 0)= mryes then
 begin
 memo1.Text:=GetDosOutput('cmd /c pyocd cmd -u '+ copy(combobox1.Items.Text, 25, 6) +' -t '+ edit3.Text +' -c "load '+label1.caption+' 0x'+edit4.text+'"', 'c:\', Rc);
 messagedlg('Файл '+label1.caption+' записан на Flash по адресу: 0x'+ edit4.Text +'!', mtInformation, [mbOK], 0);
 end else
-
+end else
+messagedlg('Не все поля заполнены!', mtWarning, [mbOK], 0);
 end;
 
 procedure TForm1.Button5Click(Sender: TObject);
 begin
 if opendialog1.Execute then
 label1.Caption:=opendialog1.FileName;
-end;
-
-procedure TForm1.ComboBox1Change(Sender: TObject);
-begin
-if combobox1.Text='' then
-begin
-button1.Enabled:=false;
-button2.Enabled:=false;
+if label1.Caption<>'' then
+button4.Enabled:=true else
 button4.Enabled:=false;
-button5.Enabled:=false;
-end else
-begin
-button1.Enabled:=true;
-button2.Enabled:=true;
-button4.Enabled:=true;
-button5.Enabled:=true;
-end;
 end;
 
 procedure TForm1.Edit4KeyPress(Sender: TObject; var Key: Char);

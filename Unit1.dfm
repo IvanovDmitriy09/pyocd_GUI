@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 711
-  Top = 246
+  Left = 608
+  Top = 232
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'pyocd GUI'
@@ -193,6 +193,15 @@ object Form1: TForm1
     ParentShowHint = False
     ShowHint = True
     TabOrder = 11
+  end
+  object Button6: TButton
+    Left = 144
+    Top = 48
+    Width = 97
+    Height = 21
+    Caption = #1044#1086#1073#1072#1074#1080#1090#1100' target'
+    TabOrder = 12
+    OnClick = Button6Click
   end
   object OpenDialog1: TOpenDialog
     Filter = 

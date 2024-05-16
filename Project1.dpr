@@ -2,7 +2,8 @@ program Project1;
 
 uses
   Forms,
-  Unit1 in 'Unit1.pas' {Form1};
+  Unit1 in 'Unit1.pas' {Form1},
+  Unit2 in 'D:\Program Files (x86)\Borland\Delphi7\Projects\Unit2.pas' {Form2};
 
 {$R *.res}
 
@@ -10,5 +11,6 @@ begin
   Application.Initialize;
   Application.Title := 'pyocd GUI';
   Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TForm2, Form2);
   Application.Run;
 end.

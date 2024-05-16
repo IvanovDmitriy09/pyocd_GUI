@@ -27,6 +27,7 @@ type
     Edit4: TEdit;
     Label4: TLabel;
     ComboBox2: TComboBox;
+    Button6: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Edit1KeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
@@ -36,6 +37,7 @@ type
     procedure Button4Click(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure Edit4KeyPress(Sender: TObject; var Key: Char);
+    procedure Button6Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -45,8 +47,12 @@ type
 var
   Form1: TForm1;
   rc: cardinal;
-
+  Function GetDosOutput( const CommandLine, WorkDir: String; var ResultCode: Cardinal ): String;
+  procedure refresh_target;
+  procedure refresh_debugprobe;
 implementation
+
+uses Unit2;
 
 {$R *.dfm}
 
@@ -195,6 +201,12 @@ begin
     Key := #0;
 end;
 
+procedure TForm1.Edit2KeyPress(Sender: TObject; var Key: Char);
+begin
+  if not (Key in ['0'..'9', #8]) then
+    Key := #0;
+end;
+
 procedure TForm1.FormCreate(Sender: TObject);
 begin
 stringgrid1.ColWidths[0]:=55;
@@ -218,12 +230,6 @@ stringgrid1.Cells[16,0]:='F';
 
 end;
 
-procedure TForm1.Edit2KeyPress(Sender: TObject; var Key: Char);
-begin
-  if not (Key in ['0'..'9', #8]) then
-    Key := #0;
-end;
-
 procedure TForm1.Button2Click(Sender: TObject);
 begin
 if combobox2.Text <> '' then
@@ -238,27 +244,8 @@ messagedlg('Не все поля заполнены!', mtWarning, [mbOK], 0);
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
-var
-s, sl: string;
-p, i: integer;
 begin
-
-s:=GetDosOutput('cmd /c pyocd list', 'c:\', Rc);
-combobox1.Clear;
-
-while pos(#13, s)<>0 do
-begin
-p:=pos(#13, s);
-delete(s, 1, p+1);
-p:=pos(#13, s);
-delete(s, 1, p+1);
-memo1.Text:=s;
-combobox1.Items.Add(s);
-end;
-combobox1.Items.Delete(combobox1.Items.Count-1);
-
-combobox1.ItemIndex:=0;
-
+refresh_debugprobe;
 if combobox1.Text='' then
 begin
 button1.Enabled:=false;
@@ -270,47 +257,7 @@ button1.Enabled:=true;
 button2.Enabled:=true;
 button5.Enabled:=true;
 end;
-
-
-
-s:=GetDosOutput('cmd /c pyocd list -t', 'c:\', Rc);
-combobox2.Clear;
-while pos('pack', s)<>0 do
-begin
-  p:=pos('pack', s);
-  while s[p] <> #13  do
-  begin
-    p:=p-1;
-  end;
-  delete(s, 1, p);
-  p:=pos('pack', s);
-  sl:=copy(s, 0, p-1);
-  i:=pos('   ', sl);
-  delete(sl, 1, i);
-
-  i:=1;
-    while sl[i] = ' '  do
-    begin
-      i:=i+1;
-    end;
-  delete(sl, 1, i-1);
-  i:=pos('   ', sl);
-  delete(sl, 1, i);
-  i:=1;
-    while sl[i] = ' '  do
-    begin
-      i:=i+1;
-    end;
-    delete(sl, 1, i-1);
-    i:=pos(' ', sl);
-    sl:=copy(sl, 0, i-1);
-    combobox2.Items.Add(sl);
-    combobox2.ItemIndex:=0;
-  delete(s, 1, p);
-end;
-
-
-
+refresh_target;
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
@@ -340,5 +287,74 @@ begin
   if not (Key in ['0'..'9', #8, 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F']) then
     Key := #0;
 end;
+
+procedure TForm1.Button6Click(Sender: TObject);
+begin
+form2.ShowModal;
+end;
+
+procedure refresh_debugprobe;
+var
+s: string;
+p: integer;
+begin
+s:=GetDosOutput('cmd /c pyocd list', 'c:\', Rc);
+form1.combobox1.Clear;
+while pos(#13, s)<>0 do
+begin
+p:=pos(#13, s);
+delete(s, 1, p+1);
+p:=pos(#13, s);
+delete(s, 1, p+1);
+form1.memo1.Text:=s;
+form1.combobox1.Items.Add(s);
+end;
+form1.combobox1.Items.Delete(form1.combobox1.Items.Count-1);
+form1.combobox1.ItemIndex:=0;
+end;
+
+procedure refresh_target;
+var
+s, sl: string;
+p, i: integer;
+begin
+s:=GetDosOutput('cmd /c pyocd list -t', 'c:\', Rc);
+form1.combobox2.Clear;
+while pos('pack', s)<>0 do
+begin
+  p:=pos('pack', s);
+  while s[p] <> #13  do
+  begin
+    p:=p-1;
+  end;
+  delete(s, 1, p);
+  p:=pos('pack', s);
+  sl:=copy(s, 0, p-1);
+  i:=pos('   ', sl);
+  delete(sl, 1, i);
+
+  i:=1;
+    while sl[i] = ' '  do
+    begin
+      i:=i+1;
+    end;
+  delete(sl, 1, i-1);
+  i:=pos('   ', sl);
+  delete(sl, 1, i);
+  i:=1;
+    while sl[i] = ' '  do
+    begin
+      i:=i+1;
+    end;
+    delete(sl, 1, i-1);
+    i:=pos(' ', sl);
+    sl:=copy(sl, 0, i-1);
+    form1.combobox2.Items.Add(sl);
+    form1.combobox2.ItemIndex:=0;
+  delete(s, 1, p);
+end;
+end;
+
+
 
 end.

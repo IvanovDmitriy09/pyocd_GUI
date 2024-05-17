@@ -199,7 +199,10 @@ object Form1: TForm1
     Top = 48
     Width = 97
     Height = 21
+    Hint = #1044#1086#1073#1072#1074#1080#1090#1100' target'
     Caption = #1044#1086#1073#1072#1074#1080#1090#1100' target'
+    ParentShowHint = False
+    ShowHint = True
     TabOrder = 12
     OnClick = Button6Click
   end

@@ -3,7 +3,7 @@ program Project1;
 uses
   Forms,
   Unit1 in 'Unit1.pas' {Form1},
-  Unit2 in 'D:\Program Files (x86)\Borland\Delphi7\Projects\Unit2.pas' {Form2};
+  Unit2 in 'Unit2.pas' {Form2};
 
 {$R *.res}
 

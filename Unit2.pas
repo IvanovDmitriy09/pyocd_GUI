@@ -88,6 +88,7 @@ CopyFile(PAnsiChar(opendialog1.FileName), PAnsiChar(s+'\'+tvers+'.pack'), false)
 doc.Active:=False;
 doc:=nil;
 FindClose(searchResult);
+DeleteFile(filepath+'\'+filename);
 refresh_target;
 form2.Close;
 end else

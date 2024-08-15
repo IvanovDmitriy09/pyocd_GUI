@@ -153,62 +153,60 @@ end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 var
-s, sc: string;
-p, r, i, z: longint;
+  s, sc: string;
+  p, i, z: longint;
 begin
-if (edit1.Text <> '') and (edit2.Text <> '') and (combobox2.Text <> '') then
-begin
-s:=GetDosOutput('cmd /c pyocd cmd -u '+ copy(combobox1.Items.Text, 25, 6) +' -t '+ combobox2.Text +' -c "read8 0x'+edit1.text+' '+edit2.text+'"', 'c:\', Rc);
-memo1.Text:=s;
+  if (edit1.Text <> '') and (edit2.Text <> '') and (combobox2.Text <> '') then
+    begin
+      s:=GetDosOutput('cmd /c pyocd cmd -u '+ copy(combobox1.Items.Text, 25, 6) +' -t '+ combobox2.Text +' -c "read8 0x'+edit1.text+' '+edit2.text+'"', 'c:\', Rc);
+      memo1.Text:=s;
 
-stringgrid1.RowCount:=ceil(strtoint(edit2.Text)/16)+1;
+      stringgrid1.RowCount:=ceil(strtoint(edit2.Text)/16)+1;
 
-z:=length(edit1.Text);
-if z<>8 then
-begin
-z:=8-z;
-for i:=1 to z do
-edit1.Text:='0'+edit1.Text;
-end;
+      z:=length(edit1.Text);
+      if z<>8 then
+        begin
+          z:=8-z;
+          for i:=1 to z do
+          edit1.Text:='0'+edit1.Text;
+        end;
 
-p:=pos(edit1.text, s);
-delete(s, 1, p-1);
+      p:=pos(edit1.text, s);
+      delete(s, 1, p-1);
 
-for i:=1 to stringgrid1.RowCount+1 do
-begin
-p:=pos('|', s);
-sc:=copy(s, 0, p-5);
-stringgrid1.Cells[0,i]:=copy(sc,0,8);
-stringgrid1.Cells[1,i]:=copy(sc,12,2);
-stringgrid1.Cells[2,i]:=copy(sc,15,2);
-stringgrid1.Cells[3,i]:=copy(sc,18,2);
-stringgrid1.Cells[4,i]:=copy(sc,21,2);
-stringgrid1.Cells[5,i]:=copy(sc,25,2);
-stringgrid1.Cells[6,i]:=copy(sc,28,2);
-stringgrid1.Cells[7,i]:=copy(sc,31,2);
-stringgrid1.Cells[8,i]:=copy(sc,34,2);
-stringgrid1.Cells[9,i]:=copy(sc,38,2);
-stringgrid1.Cells[10,i]:=copy(sc,41,2);
-stringgrid1.Cells[11,i]:=copy(sc,44,2);
-stringgrid1.Cells[12,i]:=copy(sc,47,2);
-stringgrid1.Cells[13,i]:=copy(sc,51,2);
-stringgrid1.Cells[14,i]:=copy(sc,54,2);
-stringgrid1.Cells[15,i]:=copy(sc,57,2);
-stringgrid1.Cells[16,i]:=copy(sc,60,2);
+      for i:=1 to stringgrid1.RowCount+1 do
+        begin
+          p:=pos('|', s);
+          sc:=copy(s, 0, p-5);
+          stringgrid1.Cells[0,i]:=copy(sc,0,8);
+          stringgrid1.Cells[1,i]:=copy(sc,12,2);
+          stringgrid1.Cells[2,i]:=copy(sc,15,2);
+          stringgrid1.Cells[3,i]:=copy(sc,18,2);
+          stringgrid1.Cells[4,i]:=copy(sc,21,2);
+          stringgrid1.Cells[5,i]:=copy(sc,25,2);
+          stringgrid1.Cells[6,i]:=copy(sc,28,2);
+          stringgrid1.Cells[7,i]:=copy(sc,31,2);
+          stringgrid1.Cells[8,i]:=copy(sc,34,2);
+          stringgrid1.Cells[9,i]:=copy(sc,38,2);
+          stringgrid1.Cells[10,i]:=copy(sc,41,2);
+          stringgrid1.Cells[11,i]:=copy(sc,44,2);
+          stringgrid1.Cells[12,i]:=copy(sc,47,2);
+          stringgrid1.Cells[13,i]:=copy(sc,51,2);
+          stringgrid1.Cells[14,i]:=copy(sc,54,2);
+          stringgrid1.Cells[15,i]:=copy(sc,57,2);
+          stringgrid1.Cells[16,i]:=copy(sc,60,2);
+          delete(s, 1, p);
+          p:=pos(#13, s);
+          delete(s, 1, p+1);
+        end;
+      if stringgrid1.Cells[1,1]<>'' then
+        SpeedButton1.Enabled:=true else
+          SpeedButton1.Enabled:=false;
 
-delete(s, 1, p);
-p:=pos(#13, s);
-delete(s, 1, p+1);
-end;
+      messagedlg('Flash прочитана!', mtInformation, [mbOK], 0);
 
-if stringgrid1.Cells[1,1]<>'' then
-SpeedButton1.Enabled:=true else
-SpeedButton1.Enabled:=false;
-
-messagedlg('Flash прочитана!', mtInformation, [mbOK], 0);
-
-end else
-messagedlg('Не все поля заполнены!', mtWarning, [mbOK], 0);
+    end else
+      messagedlg('Не все поля заполнены!', mtWarning, [mbOK], 0);
 
 end;
 
@@ -226,68 +224,66 @@ end;
 
 procedure TForm1.FormCreate(Sender: TObject);
 begin
-stringgrid1.ColWidths[0]:=55;
-
-stringgrid1.Cells[1,0]:='0';
-stringgrid1.Cells[2,0]:='1';
-stringgrid1.Cells[3,0]:='2';
-stringgrid1.Cells[4,0]:='3';
-stringgrid1.Cells[5,0]:='4';
-stringgrid1.Cells[6,0]:='5';
-stringgrid1.Cells[7,0]:='6';
-stringgrid1.Cells[8,0]:='7';
-stringgrid1.Cells[9,0]:='8';
-stringgrid1.Cells[10,0]:='9';
-stringgrid1.Cells[11,0]:='A';
-stringgrid1.Cells[12,0]:='B';
-stringgrid1.Cells[13,0]:='C';
-stringgrid1.Cells[14,0]:='D';
-stringgrid1.Cells[15,0]:='E';
-stringgrid1.Cells[16,0]:='F';
-
+  stringgrid1.ColWidths[0]:=55;
+  stringgrid1.Cells[1,0]:='0';
+  stringgrid1.Cells[2,0]:='1';
+  stringgrid1.Cells[3,0]:='2';
+  stringgrid1.Cells[4,0]:='3';
+  stringgrid1.Cells[5,0]:='4';
+  stringgrid1.Cells[6,0]:='5';
+  stringgrid1.Cells[7,0]:='6';
+  stringgrid1.Cells[8,0]:='7';
+  stringgrid1.Cells[9,0]:='8';
+  stringgrid1.Cells[10,0]:='9';
+  stringgrid1.Cells[11,0]:='A';
+  stringgrid1.Cells[12,0]:='B';
+  stringgrid1.Cells[13,0]:='C';
+  stringgrid1.Cells[14,0]:='D';
+  stringgrid1.Cells[15,0]:='E';
+  stringgrid1.Cells[16,0]:='F';
 end;
 
 procedure TForm1.Button2Click(Sender: TObject);
 begin
-if combobox2.Text <> '' then
-begin
-if messagedlg('Вы точно хотите очистить Flash?', mtConfirmation, [mbYes, mbNo], 0)= mryes then
-begin
-memo1.text:=GetDosOutput('cmd /c pyocd cmd -u '+ copy(combobox1.Items.Text, 25, 6) +' -t '+ combobox2.Text +' -c "erase"', 'c:\', Rc);
-messagedlg('Flash очищена!', mtInformation, [mbOK], 0);
-end else
-end else
-messagedlg('Не все поля заполнены!', mtWarning, [mbOK], 0);
+  if combobox2.Text <> '' then
+    begin
+      if messagedlg('Вы точно хотите очистить Flash?', mtConfirmation, [mbYes, mbNo], 0)= mryes then
+      begin
+        memo1.text:=GetDosOutput('cmd /c pyocd cmd -u '+ copy(combobox1.Items.Text, 25, 6) +' -t '+ combobox2.Text +' -c "erase"', 'c:\', Rc);
+        messagedlg('Flash очищена!', mtInformation, [mbOK], 0);
+      end else
+    end else
+  messagedlg('Не все поля заполнены!', mtWarning, [mbOK], 0);
 end;
 
 procedure TForm1.Button3Click(Sender: TObject);
 begin
-refresh_debugprobe;
-if combobox1.Text='' then
-begin
-button1.Enabled:=false;
-button2.Enabled:=false;
-speedButton2.Enabled:=false;
-end else
-begin
-button1.Enabled:=true;
-button2.Enabled:=true;
-speedButton2.Enabled:=true;
-end;
-refresh_target;
+  refresh_debugprobe;
+    if combobox1.Text='' then
+      begin
+        button1.Enabled:=false;
+        button2.Enabled:=false;
+        speedButton2.Enabled:=false;
+      end else
+      begin
+        button1.Enabled:=true;
+        button2.Enabled:=true;
+        speedButton2.Enabled:=true;
+      end;
+  refresh_target;
 end;
 
 procedure TForm1.Button4Click(Sender: TObject);
 begin
-if (combobox2.Text <> '') and (edit4.Text <> '') then
-begin
-if messagedlg('Вы точно хотите записать файл '+ label1.Caption +' на Flash?', mtConfirmation, [mbYes, mbNo], 0)= mryes then
-begin
-memo1.Text:=GetDosOutput('cmd /c pyocd flash -u '+ copy(combobox1.Items.Text, 25, 6) +' -t '+ combobox2.Text +' '+opendialog1.FileName+' --base-address '+'0x'+edit4.text+'"', 'c:\', Rc);
-messagedlg('Файл '+label1.caption+' записан на Flash по адресу: 0x'+ edit4.Text +'!', mtInformation, [mbOK], 0);
-end else
-end else
-messagedlg('Не все поля заполнены!', mtWarning, [mbOK], 0);
+  if (combobox2.Text <> '') and (edit4.Text <> '') then
+    begin
+      if messagedlg('Вы точно хотите записать файл '+ label1.Caption +' на Flash?', mtConfirmation, [mbYes, mbNo], 0)= mryes then
+        begin
+          memo1.Text:=GetDosOutput('cmd /c pyocd flash -u '+ copy(combobox1.Items.Text, 25, 6) +' -t '+ combobox2.Text +' '+opendialog1.FileName+' --base-address '+'0x'+edit4.text+'"', 'c:\', Rc);
+          messagedlg('Файл '+label1.caption+' записан на Flash по адресу: 0x'+ edit4.Text +'!', mtInformation, [mbOK], 0);
+        end else
+    end else
+    messagedlg('Не все поля заполнены!', mtWarning, [mbOK], 0);
 end;
 
 procedure TForm1.Edit4KeyPress(Sender: TObject; var Key: Char);
@@ -298,80 +294,80 @@ end;
 
 procedure TForm1.Button6Click(Sender: TObject);
 begin
-form2.ShowModal;
+  form2.ShowModal;
 end;
 
 procedure refresh_debugprobe;
 var
-s: string;
-p: integer;
+  s: string;
+  p: integer;
 begin
-s:=GetDosOutput('cmd /c pyocd list', 'c:\', Rc);
-form1.combobox1.Clear;
-while pos(#13, s)<>0 do
-begin
-p:=pos(#13, s);
-delete(s, 1, p+1);
-p:=pos(#13, s);
-delete(s, 1, p+1);
-form1.memo1.Text:=s;
-form1.combobox1.Items.Add(s);
-end;
-form1.combobox1.Items.Delete(form1.combobox1.Items.Count-1);
-form1.combobox1.ItemIndex:=0;
+  s:=GetDosOutput('cmd /c pyocd list', 'c:\', Rc);
+  form1.combobox1.Clear;
+    while pos(#13, s)<>0 do
+      begin
+        p:=pos(#13, s);
+        delete(s, 1, p+1);
+        p:=pos(#13, s);
+        delete(s, 1, p+1);
+        form1.memo1.Text:=s;
+        form1.combobox1.Items.Add(s);
+      end;
+  form1.combobox1.Items.Delete(form1.combobox1.Items.Count-1);
+  form1.combobox1.ItemIndex:=0;
 end;
 
 procedure refresh_target;
 var
-s, sl: string;
-p, i: integer;
+  s, sl: string;
+  p, i: integer;
 begin
-s:=GetDosOutput('cmd /c pyocd list -t', 'c:\', Rc);
-form1.combobox2.Clear;
-while pos('pack', s)<>0 do
-begin
-  p:=pos('pack', s);
-  while s[p] <> #13  do
+  s:=GetDosOutput('cmd /c pyocd list -t', 'c:\', Rc);
+  form1.combobox2.Clear;
+  while pos('pack', s)<>0 do
   begin
-    p:=p-1;
-  end;
-  delete(s, 1, p);
-  p:=pos('pack', s);
-  sl:=copy(s, 0, p-1);
-  i:=pos('   ', sl);
-  delete(sl, 1, i);
+    p:=pos('pack', s);
+    while s[p] <> #13  do
+    begin
+      p:=p-1;
+    end;
+    delete(s, 1, p);
+    p:=pos('pack', s);
+    sl:=copy(s, 0, p-1);
+    i:=pos('   ', sl);
+    delete(sl, 1, i);
 
-  i:=1;
-    while sl[i] = ' '  do
-    begin
-      i:=i+1;
-    end;
-  delete(sl, 1, i-1);
-  i:=pos('   ', sl);
-  delete(sl, 1, i);
-  i:=1;
-    while sl[i] = ' '  do
-    begin
-      i:=i+1;
-    end;
+    i:=1;
+      while sl[i] = ' '  do
+      begin
+        i:=i+1;
+      end;
     delete(sl, 1, i-1);
-    i:=pos(' ', sl);
-    sl:=copy(sl, 0, i-1);
-    form1.combobox2.Items.Add(sl);
-    form1.combobox2.ItemIndex:=0;
-  delete(s, 1, p);
-end;
+    i:=pos('   ', sl);
+    delete(sl, 1, i);
+    i:=1;
+      while sl[i] = ' '  do
+      begin
+        i:=i+1;
+      end;
+      delete(sl, 1, i-1);
+      i:=pos(' ', sl);
+      sl:=copy(sl, 0, i-1);
+      form1.combobox2.Items.Add(sl);
+      form1.combobox2.ItemIndex:=0;
+    delete(s, 1, p);
+  end;
 end;
 
 
 
 procedure TForm1.SpeedButton2Click(Sender: TObject);
 begin
-if opendialog1.Execute then
-label1.Caption:=opendialog1.FileName;
-if label1.Caption<>'' then
-button4.Enabled:=true else
-button4.Enabled:=false;
+  if opendialog1.Execute then
+    label1.Caption:=opendialog1.FileName;
+      if label1.Caption<>'' then
+        button4.Enabled:=true else
+          button4.Enabled:=false;
 end;
 
 procedure TForm1.SpeedButton1Click(Sender: TObject);
@@ -380,21 +376,20 @@ var
   fs: TFileStream;
   i, n: integer;
 begin
-savedialog1.Filter:='Двоичный файл (*.bin)|*.bin';
-if savedialog1.Execute then
-begin
-fs := TFileStream.Create(savedialog1.FileName+'.bin', fmCreate or fmOpenReadWrite or fmShareDenyWrite);
-fs.Seek(0, soFromBeginning);
+  savedialog1.Filter:='Двоичный файл (*.bin)|*.bin';
+    if savedialog1.Execute then
+      begin
+        fs := TFileStream.Create(savedialog1.FileName+'.bin', fmCreate or fmOpenReadWrite or fmShareDenyWrite);
+        fs.Seek(0, soFromBeginning);
 
-for n:=1 to stringgrid1.RowCount-1 do
-for i:=1 to 16 do
-begin
-byte1:= strtoint('$'+stringgrid1.Cells[i,n]);
-fs.Write(byte1,sizeof(byte1));
-end;
-fs.Free;
-
-end;
+        for n:=1 to stringgrid1.RowCount-1 do
+          for i:=1 to 16 do
+            begin
+              byte1:= strtoint('$'+stringgrid1.Cells[i,n]);
+              fs.Write(byte1,sizeof(byte1));
+            end;
+          fs.Free;
+      end;
 end;
 
 end.

@@ -283,7 +283,7 @@ if (combobox2.Text <> '') and (edit4.Text <> '') then
 begin
 if messagedlg('Вы точно хотите записать файл '+ label1.Caption +' на Flash?', mtConfirmation, [mbYes, mbNo], 0)= mryes then
 begin
-memo1.Text:=GetDosOutput('cmd /c pyocd flash -u '+ copy(combobox1.Items.Text, 25, 6) +' -t '+ combobox2.Text +' '+opendialog1.FileName+' --base-address '+'0x'+edit4.text+'"', 'c:\', Rc);
+memo1.Text:=GetDosOutput('cmd /c pyocd cmd -u '+ copy(combobox1.Items.Text, 25, 6) +' -t '+ combobox2.Text +' -c "load '+opendialog1.FileName+' 0x'+edit4.text+'"', 'c:\', Rc);
 messagedlg('Файл '+label1.caption+' записан на Flash по адресу: 0x'+ edit4.Text +'!', mtInformation, [mbOK], 0);
 end else
 end else

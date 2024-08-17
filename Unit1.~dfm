@@ -153,7 +153,7 @@ object Form1: TForm1
     ParentShowHint = False
     ShowHint = True
     TabOrder = 4
-    Text = '0'
+    Text = '08000000'
     OnKeyPress = Edit1KeyPress
   end
   object Edit2: TEdit
@@ -216,7 +216,7 @@ object Form1: TForm1
     ParentShowHint = False
     ShowHint = True
     TabOrder = 9
-    Text = '0'
+    Text = '08000000'
     OnKeyPress = Edit4KeyPress
   end
   object ComboBox2: TComboBox

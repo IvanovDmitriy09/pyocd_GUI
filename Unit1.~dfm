@@ -140,8 +140,12 @@ object Form1: TForm1
     DefaultColWidth = 20
     DefaultRowHeight = 20
     RowCount = 2
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goThumbTracking]
     ParentCtl3D = False
+    PopupMenu = PopupMenu1
+    ScrollBars = ssVertical
     TabOrder = 3
+    OnDrawCell = StringGrid1DrawCell
   end
   object Edit1: TEdit
     Left = 176
@@ -257,5 +261,13 @@ object Form1: TForm1
   object XPManifest1: TXPManifest
     Left = 344
     Top = 192
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 136
+    Top = 296
+    object N1: TMenuItem
+      Caption = #1062#1074#1077#1090#1072' '#1103#1095#1077#1077#1082
+      OnClick = N1Click
+    end
   end
 end

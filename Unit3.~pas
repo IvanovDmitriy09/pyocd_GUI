@@ -70,37 +70,31 @@ end;
 
 procedure TForm3.Button5Click(Sender: TObject);
 begin
-if (edit1.Text<>'') and (edit2.Text<>'') and (edit3.Text<>'') and (edit4.Text<>'') then
-begin
 form1.StringGrid1.Refresh;
 form3.Close;
-end else
-begin
-messagedlg('Не все поля заполнены!', mtWarning, [mbOK], 0);
-end;
 end;
 
 procedure TForm3.Edit1KeyPress(Sender: TObject; var Key: Char);
 begin
-  if not (Key in ['0'..'9', #8, 'a', 'b', 'c', 'd', 'e', 'f']) then
+  if not (Key in ['0'..'9', #8, 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F']) then
     Key := #0;
 end;
 
 procedure TForm3.Edit2KeyPress(Sender: TObject; var Key: Char);
 begin
-  if not (Key in ['0'..'9', #8, 'a', 'b', 'c', 'd', 'e', 'f']) then
+  if not (Key in ['0'..'9', #8, 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F']) then
     Key := #0;
 end;
 
 procedure TForm3.Edit3KeyPress(Sender: TObject; var Key: Char);
 begin
-  if not (Key in ['0'..'9', #8, 'a', 'b', 'c', 'd', 'e', 'f']) then
+  if not (Key in ['0'..'9', #8, 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F']) then
     Key := #0;
 end;
 
 procedure TForm3.Edit4KeyPress(Sender: TObject; var Key: Char);
 begin
-  if not (Key in ['0'..'9', #8, 'a', 'b', 'c', 'd', 'e', 'f']) then
+  if not (Key in ['0'..'9', #8, 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F']) then
     Key := #0;
 end;
 

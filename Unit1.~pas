@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Grids, math, XPMan, Buttons;
+  Dialogs, StdCtrls, Grids, math, XPMan, Buttons, ExtCtrls, Menus;
 
 type
   TForm1 = class(TForm)
@@ -29,6 +29,8 @@ type
     Button6: TButton;
     SpeedButton1: TSpeedButton;
     SpeedButton2: TSpeedButton;
+    PopupMenu1: TPopupMenu;
+    N1: TMenuItem;
     procedure Button1Click(Sender: TObject);
     procedure Edit1KeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
@@ -40,6 +42,9 @@ type
     procedure Button6Click(Sender: TObject);
     procedure SpeedButton2Click(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
+    procedure StringGrid1DrawCell(Sender: TObject; ACol, ARow: Integer;
+      Rect: TRect; State: TGridDrawState);
+    procedure N1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -54,7 +59,7 @@ var
   procedure refresh_debugprobe;
 implementation
 
-uses Unit2;
+uses Unit2, Unit3;
 
 {$R *.dfm}
 
@@ -390,6 +395,40 @@ begin
             end;
           fs.Free;
       end;
+end;
+
+procedure TForm1.StringGrid1DrawCell(Sender: TObject; ACol, ARow: Integer;
+  Rect: TRect; State: TGridDrawState);
+begin
+  if stringgrid1.Cells[ACol,ARow] = form3.Edit1.Text then
+  begin
+    Stringgrid1.Canvas.Brush.Color := form3.Edit1.Color;
+    StringGrid1.Canvas.FillRect(Rect);
+    StringGrid1.Canvas.TextOut(Rect.Left+2, Rect.Top+2, StringGrid1.Cells[ACol, ARow]);
+  end;
+  if stringgrid1.Cells[ACol,ARow] = form3.Edit2.Text then
+  begin
+    Stringgrid1.Canvas.Brush.Color := form3.Edit2.Color;
+    StringGrid1.Canvas.FillRect(Rect);
+    StringGrid1.Canvas.TextOut(Rect.Left+2, Rect.Top+2, StringGrid1.Cells[ACol, ARow]);
+  end;
+  if stringgrid1.Cells[ACol,ARow] = form3.Edit3.Text then
+  begin
+    Stringgrid1.Canvas.Brush.Color := form3.Edit3.Color;
+    StringGrid1.Canvas.FillRect(Rect);
+    StringGrid1.Canvas.TextOut(Rect.Left+2, Rect.Top+2, StringGrid1.Cells[ACol, ARow]);
+  end;
+  if stringgrid1.Cells[ACol,ARow] = form3.Edit4.Text then
+  begin
+    Stringgrid1.Canvas.Brush.Color := form3.Edit4.Color;
+    StringGrid1.Canvas.FillRect(Rect);
+    StringGrid1.Canvas.TextOut(Rect.Left+2, Rect.Top+2, StringGrid1.Cells[ACol, ARow]);
+  end;
+end;
+
+procedure TForm1.N1Click(Sender: TObject);
+begin
+Form3.ShowModal;
 end;
 
 end.

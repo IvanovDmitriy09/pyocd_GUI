@@ -31,6 +31,8 @@ type
     SpeedButton2: TSpeedButton;
     PopupMenu1: TPopupMenu;
     N1: TMenuItem;
+    ComboBox3: TComboBox;
+    Label5: TLabel;
     procedure Button1Click(Sender: TObject);
     procedure Edit1KeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
@@ -166,7 +168,7 @@ begin
   edit2.Text:=inttostr(strtoint(edit2.Text));
     if (edit2.Text<>'0') then
     begin
-      s:=GetDosOutput('cmd /c pyocd cmd -u '+ copy(combobox1.Items.Text, 25, 6) +' -t '+ combobox2.Text +' -c "read8 0x'+edit1.text+' '+edit2.text+'"', 'c:\', Rc);
+      s:=GetDosOutput('cmd /c pyocd cmd -u '+ copy(combobox1.Items.Text, 25, 6) +' -t '+ combobox2.Text +' -f '+ combobox3.Text +' -c "read8 0x'+edit1.text+' '+edit2.text+'"', 'c:\', Rc);
       memo1.Text:=s;
       stringgrid1.RowCount:=ceil(strtoint(edit2.Text)/16)+1;
       z:=length(edit1.Text);
@@ -252,7 +254,7 @@ begin
     begin
       if messagedlg('Вы точно хотите очистить Flash?', mtConfirmation, [mbYes, mbNo], 0)= mryes then
       begin
-        memo1.text:=GetDosOutput('cmd /c pyocd cmd -u '+ copy(combobox1.Items.Text, 25, 6) +' -t '+ combobox2.Text +' -c "erase"', 'c:\', Rc);
+        memo1.text:=GetDosOutput('cmd /c pyocd cmd -u '+ copy(combobox1.Items.Text, 25, 6) +' -t '+ combobox2.Text +' -f '+ combobox3.Text +' -c "erase"', 'c:\', Rc);
         messagedlg('Flash очищена!', mtInformation, [mbOK], 0);
       end else
     end else
@@ -282,7 +284,7 @@ begin
     begin
       if messagedlg('Вы точно хотите записать файл '+ label1.Caption +' на Flash?', mtConfirmation, [mbYes, mbNo], 0)= mryes then
         begin
-          memo1.Text:=GetDosOutput('cmd /c pyocd flash -u '+ copy(combobox1.Items.Text, 25, 6) +' -t '+ combobox2.Text +' '+opendialog1.FileName+' --base-address '+'0x'+edit4.text+'"', 'c:\', Rc);
+          memo1.Text:=GetDosOutput('cmd /c pyocd flash -u '+ copy(combobox1.Items.Text, 25, 6) +' -t '+ combobox2.Text +' -f '+ combobox3.Text +' '+opendialog1.FileName+' --base-address '+'0x'+edit4.text+'"', 'c:\', Rc);
           messagedlg('Файл '+label1.caption+' записан на Flash по адресу: 0x'+ edit4.Text +'!', mtInformation, [mbOK], 0);
         end else
     end else

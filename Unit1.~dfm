@@ -1,5 +1,5 @@
 object Form1: TForm1
-  Left = 681
+  Left = 673
   Top = 257
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
@@ -251,20 +251,20 @@ object Form1: TForm1
     Filter = 
       #1060#1072#1081#1083#1099' '#1087#1088#1086#1096#1080#1074#1086#1082' *.bin *.hex|*.bin;*.hex|'#1060#1072#1081#1083#1099' '#1087#1088#1086#1096#1080#1074#1086#1082' *.bin|*.bi' +
       'n|'#1060#1072#1081#1083#1099' '#1087#1088#1086#1096#1080#1074#1086#1082' *.hex|*.hex'
-    Left = 376
-    Top = 192
+    Left = 272
+    Top = 288
   end
   object SaveDialog1: TSaveDialog
-    Left = 408
-    Top = 192
+    Left = 304
+    Top = 288
   end
   object XPManifest1: TXPManifest
-    Left = 344
-    Top = 192
+    Left = 240
+    Top = 288
   end
   object PopupMenu1: TPopupMenu
-    Left = 136
-    Top = 296
+    Left = 336
+    Top = 288
     object N1: TMenuItem
       Caption = #1062#1074#1077#1090#1072' '#1103#1095#1077#1077#1082
       OnClick = N1Click

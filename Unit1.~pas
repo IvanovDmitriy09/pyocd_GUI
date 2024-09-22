@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Grids, math, XPMan, Buttons, ExtCtrls, Menus;
+  Dialogs, StdCtrls, Grids, math, XPMan, Buttons, ExtCtrls, Menus, ComCtrls;
 
 type
   TForm1 = class(TForm)
@@ -162,12 +162,13 @@ var
   p, i, z: longint;
 begin
   if (edit1.Text <> '') and (edit2.Text <> '') and (combobox2.Text <> '') then
+  begin
+  edit2.Text:=inttostr(strtoint(edit2.Text));
+    if (edit2.Text<>'0') then
     begin
       s:=GetDosOutput('cmd /c pyocd cmd -u '+ copy(combobox1.Items.Text, 25, 6) +' -t '+ combobox2.Text +' -c "read8 0x'+edit1.text+' '+edit2.text+'"', 'c:\', Rc);
       memo1.Text:=s;
-
       stringgrid1.RowCount:=ceil(strtoint(edit2.Text)/16)+1;
-
       z:=length(edit1.Text);
       if z<>8 then
         begin
@@ -175,10 +176,8 @@ begin
           for i:=1 to z do
           edit1.Text:='0'+edit1.Text;
         end;
-
       p:=pos(edit1.text, s);
       delete(s, 1, p-1);
-
       for i:=1 to stringgrid1.RowCount+1 do
         begin
           p:=pos('|', s);
@@ -207,17 +206,16 @@ begin
       if stringgrid1.Cells[1,1]<>'' then
         SpeedButton1.Enabled:=true else
           SpeedButton1.Enabled:=false;
-
       messagedlg('Flash прочитана!', mtInformation, [mbOK], 0);
-
-    end else
-      messagedlg('Не все поля заполнены!', mtWarning, [mbOK], 0);
-
+      end else
+      messagedlg('Объем считываемой памяти не может быть равен 0!', mtWarning, [mbOK], 0);
+  end else
+  messagedlg('Не все поля заполнены!', mtWarning, [mbOK], 0);
 end;
 
 procedure TForm1.Edit1KeyPress(Sender: TObject; var Key: Char);
 begin
-  if not (Key in ['0'..'9', #8, 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F']) then
+  if not (Key in ['0'..'9', #8, 'a', 'b', 'c', 'd', 'e', 'f']) then
     Key := #0;
 end;
 
@@ -293,7 +291,7 @@ end;
 
 procedure TForm1.Edit4KeyPress(Sender: TObject; var Key: Char);
 begin
-  if not (Key in ['0'..'9', #8, 'a', 'A', 'b', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F']) then
+  if not (Key in ['0'..'9', #8, 'a', 'b', 'c', 'd', 'e', 'f']) then
     Key := #0;
 end;
 

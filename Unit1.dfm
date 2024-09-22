@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 673
-  Top = 257
+  Left = 670
+  Top = 260
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'pyocd GUI'
@@ -95,6 +95,13 @@ object Form1: TForm1
     ShowHint = True
     OnClick = SpeedButton2Click
   end
+  object Label5: TLabel
+    Left = 256
+    Top = 53
+    Width = 73
+    Height = 13
+    Caption = #1095#1072#1089#1090#1086#1090#1072' '#1096#1080#1085#1099':'
+  end
   object Button1: TButton
     Left = 16
     Top = 80
@@ -174,9 +181,9 @@ object Form1: TForm1
     OnKeyPress = Edit2KeyPress
   end
   object Button3: TButton
-    Left = 328
+    Left = 344
     Top = 16
-    Width = 57
+    Width = 81
     Height = 21
     Hint = #1054#1073#1085#1086#1074#1080#1090#1100' '#1089#1087#1080#1089#1086#1082' '#1087#1088#1086#1075#1088#1072#1084#1084#1072#1090#1086#1088#1086#1074' '#1080' '#1084#1080#1082#1088#1086#1082#1086#1085#1090#1088#1086#1083#1083#1077#1088#1086#1074
     Caption = #1054#1073#1085#1086#1074#1080#1090#1100
@@ -201,7 +208,7 @@ object Form1: TForm1
   object ComboBox1: TComboBox
     Left = 16
     Top = 16
-    Width = 305
+    Width = 321
     Height = 21
     Hint = #1042#1099#1073#1086#1088' '#1087#1088#1086#1075#1088#1072#1084#1084#1072#1090#1086#1088#1072
     Style = csDropDownList
@@ -246,6 +253,24 @@ object Form1: TForm1
     ShowHint = True
     TabOrder = 11
     OnClick = Button6Click
+  end
+  object ComboBox3: TComboBox
+    Left = 336
+    Top = 48
+    Width = 89
+    Height = 21
+    Hint = #1095#1072#1089#1090#1086#1090#1072' '#1096#1080#1085#1099' SWD '#1074' '#1043#1094
+    ItemHeight = 13
+    ItemIndex = 3
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 12
+    Text = '12000000'
+    Items.Strings = (
+      '1000000'
+      '2000000'
+      '8000000'
+      '12000000')
   end
   object OpenDialog1: TOpenDialog
     Filter = 

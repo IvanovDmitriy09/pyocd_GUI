@@ -1,10 +1,10 @@
 object Form1: TForm1
-  Left = 670
-  Top = 260
+  Left = 696
+  Top = 264
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'pyocd GUI'
-  ClientHeight = 593
+  ClientHeight = 616
   ClientWidth = 449
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -130,7 +130,7 @@ object Form1: TForm1
   end
   object Memo1: TMemo
     Left = 16
-    Top = 488
+    Top = 504
     Width = 417
     Height = 97
     ReadOnly = True
@@ -181,9 +181,9 @@ object Form1: TForm1
     OnKeyPress = Edit2KeyPress
   end
   object Button3: TButton
-    Left = 344
+    Left = 336
     Top = 16
-    Width = 81
+    Width = 89
     Height = 21
     Hint = #1054#1073#1085#1086#1074#1080#1090#1100' '#1089#1087#1080#1089#1086#1082' '#1087#1088#1086#1075#1088#1072#1084#1084#1072#1090#1086#1088#1086#1074' '#1080' '#1084#1080#1082#1088#1086#1082#1086#1085#1090#1088#1086#1083#1083#1077#1088#1086#1074
     Caption = #1054#1073#1085#1086#1074#1080#1090#1100
@@ -208,7 +208,7 @@ object Form1: TForm1
   object ComboBox1: TComboBox
     Left = 16
     Top = 16
-    Width = 321
+    Width = 313
     Height = 21
     Hint = #1042#1099#1073#1086#1088' '#1087#1088#1086#1075#1088#1072#1084#1084#1072#1090#1086#1088#1072
     Style = csDropDownList
@@ -272,6 +272,22 @@ object Form1: TForm1
       '8000000'
       '12000000')
   end
+  object Button5: TButton
+    Left = 136
+    Top = 144
+    Width = 75
+    Height = 25
+    Caption = 'Button5'
+    TabOrder = 13
+    OnClick = Button5Click
+  end
+  object ProgressBar1: TProgressBar
+    Left = 16
+    Top = 480
+    Width = 417
+    Height = 17
+    TabOrder = 14
+  end
   object OpenDialog1: TOpenDialog
     Filter = 
       #1060#1072#1081#1083#1099' '#1087#1088#1086#1096#1080#1074#1086#1082' *.bin *.hex|*.bin;*.hex|'#1060#1072#1081#1083#1099' '#1087#1088#1086#1096#1080#1074#1086#1082' *.bin|*.bi' +
@@ -281,10 +297,6 @@ object Form1: TForm1
   end
   object SaveDialog1: TSaveDialog
     Left = 304
-    Top = 288
-  end
-  object XPManifest1: TXPManifest
-    Left = 240
     Top = 288
   end
   object PopupMenu1: TPopupMenu

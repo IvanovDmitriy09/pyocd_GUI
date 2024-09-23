@@ -1,5 +1,7 @@
 program Project1;
 
+{$R 'uac_xp.res' 'uac_xp.rc'}
+
 uses
   Forms,
   Unit1 in 'Unit1.pas' {Form1},

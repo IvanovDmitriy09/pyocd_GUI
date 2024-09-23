@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, Grids, math, XPMan, Buttons, ExtCtrls, Menus, ComCtrls;
+  Dialogs, StdCtrls, Grids, math, Buttons, ExtCtrls, Menus, ComCtrls;
 
 type
   TForm1 = class(TForm)
@@ -16,7 +16,6 @@ type
     Edit2: TEdit;
     OpenDialog1: TOpenDialog;
     SaveDialog1: TSaveDialog;
-    XPManifest1: TXPManifest;
     Button3: TButton;
     Button4: TButton;
     ComboBox1: TComboBox;
@@ -33,6 +32,8 @@ type
     N1: TMenuItem;
     ComboBox3: TComboBox;
     Label5: TLabel;
+    Button5: TButton;
+    ProgressBar1: TProgressBar;
     procedure Button1Click(Sender: TObject);
     procedure Edit1KeyPress(Sender: TObject; var Key: Char);
     procedure FormCreate(Sender: TObject);
@@ -47,6 +48,7 @@ type
     procedure StringGrid1DrawCell(Sender: TObject; ACol, ARow: Integer;
       Rect: TRect; State: TGridDrawState);
     procedure N1Click(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -168,9 +170,12 @@ begin
   edit2.Text:=inttostr(strtoint(edit2.Text));
     if (edit2.Text<>'0') then
     begin
+    progressbar1.Position:=0;
       s:=GetDosOutput('cmd /c pyocd cmd -u '+ copy(combobox1.Items.Text, 25, 6) +' -t '+ combobox2.Text +' -f '+ combobox3.Text +' -c "read8 0x'+edit1.text+' '+edit2.text+'"', 'c:\', Rc);
+
       memo1.Text:=s;
       stringgrid1.RowCount:=ceil(strtoint(edit2.Text)/16)+1;
+      progressbar1.Max:=stringgrid1.RowCount;
       z:=length(edit1.Text);
       if z<>8 then
         begin
@@ -182,6 +187,7 @@ begin
       delete(s, 1, p-1);
       for i:=1 to stringgrid1.RowCount+1 do
         begin
+          progressbar1.Position:=progressbar1.Position+1;
           p:=pos('|', s);
           sc:=copy(s, 0, p-5);
           stringgrid1.Cells[0,i]:=copy(sc,0,8);
@@ -429,6 +435,37 @@ end;
 procedure TForm1.N1Click(Sender: TObject);
 begin
 Form3.ShowModal;
+end;
+
+procedure TForm1.Button5Click(Sender: TObject);
+var
+s: string;
+f: TFileStream;
+a: byte;
+i, j, b: integer;
+begin
+progressbar1.Position:=0;
+progressbar1.Max:=strtoint(edit2.Text);
+b:=strtoint('$'+edit1.Text);
+s:=GetDosOutput('cmd /c pyocd cmd -u '+ copy(combobox1.Items.Text, 25, 6) +' -t '+ combobox2.Text +' -f '+ combobox3.Text +' -c "savemem 0x'+edit1.text+' '+edit2.text+' dump~.bin"', extractfilepath(application.ExeName), Rc);
+memo1.Text:=s;
+f:= TFileStream.Create('dump~.bin', fmOpenRead);
+stringgrid1.RowCount:=ceil(f.Size/16)+1;
+f.Position:=0;
+for i:=1 to stringgrid1.RowCount do
+begin
+stringgrid1.Cells[0, i]:=inttohex(b,8);
+b:=b+$10;
+for j:=1 to 16 do
+begin
+f.Read(a, 1);
+stringgrid1.Cells[j, i]:=inttohex(a,2);
+progressbar1.Position:=progressbar1.Position+1;
+if f.Position = strtoint(edit2.Text) then
+break else
+end;
+end;
+f.Free;
 end;
 
 end.
